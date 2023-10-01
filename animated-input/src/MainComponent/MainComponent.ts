@@ -1,138 +1,144 @@
 export const mainComponent = () => {
-    const slideValue = document.querySelector(".field-show-value-range") as HTMLSpanElement;
-    const slideValueSecond = document.querySelector(".second-span") as HTMLSpanElement;
-    const slideValueThird = document.querySelector(".third-span") as HTMLSpanElement;
-    const slideValueFourth = document.querySelector(".fourth-span") as HTMLSpanElement;
-    
-    const inputRangeSlider = document.querySelector(".animated-input") as HTMLInputElement;
-    const fieldBubblesValueRange = document.querySelector(".field-bubbles-value-range") as HTMLDivElement;
-    let style = document.createElement("style") as HTMLElement;
-    let styleColor = document.createElement("style") as HTMLElement;
-    let styleThumbAfter = document.createElement("style") as HTMLElement;
-    document.head.appendChild(style);
-    document.head.appendChild(styleColor);
-    document.head.appendChild(styleThumbAfter);
-    let currentColor = '';
-    let flag = false;
-  
-    inputRangeSlider?.addEventListener('input', () => {
-      let value = inputRangeSlider.value;
-      fieldBubblesValueRange!.style.left = (+value + 1) + "%";
-      const percentage = (+value - +inputRangeSlider.min) / (+inputRangeSlider.max - +inputRangeSlider.min) * 100;
-      
-      slideValue.classList.add("show-value");
-      slideValue.style.animationIterationCount = 'infinite';
-      slideValue.textContent = inputRangeSlider.value
+  const slideValue = document.querySelector(".field-show-value-range") as HTMLSpanElement;
+  const slideValueSecond = document.querySelector(".second-span") as HTMLSpanElement;
+  const slideValueThird = document.querySelector(".third-span") as HTMLSpanElement;
+  const customThumbRange = document.querySelector(".custom-thumb-range") as HTMLDivElement;
+
+
+  const inputRangeSlider = document.querySelector(".animated-input") as HTMLInputElement;
+  const fieldBubblesValueRange = document.querySelector(".field-bubbles-value-range") as HTMLDivElement;
+  let style = document.createElement("style") as HTMLElement;
+  let styleColor = document.createElement("style") as HTMLElement;
+  let styleThumbAfter = document.createElement("style") as HTMLElement;
+  document.head.appendChild(style);
+  document.head.appendChild(styleColor);
+  document.head.appendChild(styleThumbAfter);
+  let currentColor = '';
+  let flag = false;
+
+  inputRangeSlider?.addEventListener('input', () => {
+    let value = inputRangeSlider.value;
+    customThumbRange.style.left = (+value - 1) + "%"
+    fieldBubblesValueRange!.style.left = (+value + 1) + "%";
+    const percentage = (+value - +inputRangeSlider.min) / (+inputRangeSlider.max - +inputRangeSlider.min) * 100;
+
+    slideValue.classList.add("show-value");
+    slideValue.style.animationIterationCount = 'infinite';
+    slideValue.textContent = inputRangeSlider.value
+    setTimeout(() => {
+      slideValueSecond.textContent = inputRangeSlider.value
+      slideValueSecond.classList.add("show-value");
+      slideValueSecond.style.animationIterationCount = 'infinite';
+    }, 100)
+    setTimeout(() => {
+      slideValueThird.textContent = inputRangeSlider.value
+      slideValueThird.classList.add("show-value");
+      slideValueThird.style.animationIterationCount = 'infinite';
+    }, 200)
+
+
+    inputRangeSlider.addEventListener('mousedown', async () => {
+      flag = true;
+
+
+      [slideValue, slideValueSecond, slideValueThird].forEach((item, index) => {
+        if (index === 0) {
+          item.textContent = '';
+          slideValue.classList.remove("show-value-first");
+        }
+        item.classList.remove("show-value-static");
+        item.textContent = '';
+      })
+
+
+      slideValue.classList.add("show-value-static");
+      slideValue.style.animationIterationCount = '3';
       setTimeout(() => {
-        slideValueSecond.textContent = inputRangeSlider.value
-        slideValueSecond.classList.add("show-value");
-        slideValueSecond.style.animationIterationCount = 'infinite';
+        slideValueSecond.classList.add("show-value-static");
+        slideValueSecond.style.animationIterationCount = '3';
       }, 100)
       setTimeout(() => {
-        slideValueThird.textContent = inputRangeSlider.value
-        slideValueThird.classList.add("show-value");
-        slideValueThird.style.animationIterationCount = 'infinite';
+        slideValueThird.classList.add("show-value-static");
+        slideValueThird.style.animationIterationCount = '3';
       }, 200)
-  
-  
-      inputRangeSlider.addEventListener('mousedown', async () => {
-        flag = true;
-  
-        
-        [slideValue,slideValueSecond,slideValueThird].forEach(item=>{
+    })
+
+    inputRangeSlider.addEventListener('mousemove', async () => {
+      if (flag) {
+
+        [slideValue, slideValueSecond, slideValueThird].forEach(item => {
           item.classList.remove("show-value-static");
-          item.textContent = '';
         })
-        slideValueFourth.classList.remove("show-range-value");
-        slideValueFourth.textContent = '';
-  
-        slideValue.classList.add("show-value-static");
-        slideValue.style.animationIterationCount = '3';
+
+        slideValue.classList.add("show-value");
+        slideValue.style.animationIterationCount = 'infinite';
+        slideValue.textContent = inputRangeSlider.value
         setTimeout(() => {
-          slideValueSecond.classList.add("show-value-static");
-          slideValueSecond.style.animationIterationCount = '3';
+          slideValueSecond.textContent = inputRangeSlider.value
+          slideValueSecond.classList.add("show-value");
+          slideValueSecond.style.animationIterationCount = 'infinite';
         }, 100)
         setTimeout(() => {
-          slideValueThird.classList.add("show-value-static");
-          slideValueThird.style.animationIterationCount = '3';
+          slideValueThird.textContent = inputRangeSlider.value
+          slideValueThird.classList.add("show-value");
+          slideValueThird.style.animationIterationCount = 'infinite';
         }, 200)
-      })
-  
-      inputRangeSlider.addEventListener('mousemove', async () => {
-        if (flag) {
-  
-          [slideValue,slideValueSecond,slideValueThird].forEach(item=>{
-            item.classList.remove("show-value-static");
-          })
-  
-          slideValue.classList.add("show-value");
-          slideValue.style.animationIterationCount = 'infinite';
-          slideValue.textContent = inputRangeSlider.value
-          setTimeout(() => {
-            slideValueSecond.textContent = inputRangeSlider.value
-            slideValueSecond.classList.add("show-value");
-            slideValueSecond.style.animationIterationCount = 'infinite';
-          }, 100)
-          setTimeout(() => {
-            slideValueThird.textContent = inputRangeSlider.value
-            slideValueThird.classList.add("show-value");
-            slideValueThird.style.animationIterationCount = 'infinite';
-          }, 200)
-        }
-      })
-  
-      inputRangeSlider.addEventListener('mouseup', async () => {
-        flag = false;
-  
-        slideValue.textContent = '';
-  
-        slideValue.classList.remove("show-value");
-        slideValueSecond.classList.remove("show-value");
-        slideValueThird.classList.remove("show-value");
-  
-        slideValue.classList.add("show-value-static");
-        slideValue.style.animationIterationCount = '3';
-        slideValueFourth.classList.add("show-range-value");
-        slideValueFourth.textContent = inputRangeSlider.value === inputRangeSlider.max ? ('max') : (inputRangeSlider.value === inputRangeSlider.min ? ('min') : (inputRangeSlider.value));
-        slideValueFourth.style.animationIterationCount = '1';
-        setTimeout(() => {
-          slideValueSecond.textContent = '';
-          slideValueSecond.classList.add("show-value-static");
-          slideValueSecond.style.animationIterationCount = '3';
-        }, 100)
-        setTimeout(() => {
-          slideValueThird.textContent = '';
-          slideValueThird.classList.add("show-value-static");
-          slideValueThird.style.animationIterationCount = '3';
-        }, 200)
-        setTimeout(() => {
-          style.innerHTML= `.animated-input::-webkit-slider-thumb {transform: scale(2);}`
-          // styleThumbAfter.innerHTML= `.animated-input::-webkit-slider-thumb:after {content: ${inputRangeSlider.value}, transform: scale(2);}`
-        setTimeout(()=> style.innerHTML= `.animated-input::-webkit-slider-thumb {transform: scale(1);}`,2000)
-        }, 3250)
-      })
-  
-      if (value === inputRangeSlider.max) {
-        currentColor = 'white';
-        [slideValue,slideValueSecond,slideValueThird,slideValueFourth].forEach(item=>{
-          item.style.background='white';
-          item.style.color='black';
-        })
-        inputRangeSlider.style.background = `linear-gradient(90deg, white ${percentage}%, transparent ${percentage}%)`;
-        styleColor.innerHTML= '.animated-input::-webkit-slider-thumb {background-color: white;}';
-        
-      } else if (value === inputRangeSlider.min || value === '1') {
-        currentColor = 'blueviolet';
-        [slideValue,slideValueSecond,slideValueThird,slideValueFourth].forEach(item=>{
-          item.style.background='blueviolet';
-          item.style.color='white';
-        })
-        inputRangeSlider.style.background = `linear-gradient(90deg, #8A2BE2 ${percentage}%, transparent ${percentage}%)`;
-        styleColor.innerHTML= '.animated-input::-webkit-slider-thumb {background-color: blueviolet;}';
-      } else {
-        currentColor === 'blueviolet' ? (inputRangeSlider.style.background = `linear-gradient(90deg, #8A2BE2 ${percentage}%, transparent ${percentage}%)`) : (inputRangeSlider.style.background = `linear-gradient(90deg, white ${percentage}%, transparent ${percentage}%)`);
-        currentColor === 'blueviolet'? (styleColor.innerHTML= '.animated-input::-webkit-slider-thumb {background-color: blueviolet;}'):(styleColor.innerHTML= '.animated-input::-webkit-slider-thumb {background-color: white;}')
       }
-  
-    });
-  }
+    })
+
+    inputRangeSlider.addEventListener('mouseup', async () => {
+      flag = false;
+
+      slideValue.textContent = inputRangeSlider.value === inputRangeSlider.max ? ('max') : (inputRangeSlider.value === inputRangeSlider.min ? ('min') : (inputRangeSlider.value));
+
+      slideValue.classList.remove("show-value");
+      slideValueSecond.classList.remove("show-value");
+      slideValueThird.classList.remove("show-value");
+
+      slideValue.classList.add("show-value-first");
+      slideValue.style.animationIterationCount = '1';
+
+      setTimeout(() => {
+        slideValueSecond.textContent = '';
+        slideValueSecond.classList.add("show-value-static");
+        slideValueSecond.style.animationIterationCount = '3';
+      }, 100)
+      setTimeout(() => {
+        slideValueThird.textContent = '';
+        slideValueThird.classList.add("show-value-static");
+        slideValueThird.style.animationIterationCount = '3';
+      }, 200)
+      setTimeout(() => {
+        customThumbRange.style.transition = '1s ease-in-out';
+        customThumbRange.style.transform = 'scale(3)';
+        customThumbRange.textContent = inputRangeSlider.value;
+        setTimeout(() => {
+          customThumbRange.style.transform = 'scale(1)'
+          customThumbRange.textContent = '';
+          setTimeout(() => customThumbRange.style.transition = '.1s ease', 1000)
+        }, 3000)
+      }, 3250)
+    })
+
+    if (value === inputRangeSlider.max) {
+      currentColor = 'white';
+      [slideValue, slideValueSecond, slideValueThird, customThumbRange].forEach(item => {
+        item.style.background = 'white';
+        item.style.color = 'black';
+      })
+      inputRangeSlider.style.background = `linear-gradient(90deg, white ${percentage}%, transparent ${percentage}%)`;
+
+    } else if (value === inputRangeSlider.min || value === '1') {
+      currentColor = 'blueviolet';
+      [slideValue, slideValueSecond, slideValueThird, customThumbRange].forEach(item => {
+        item.style.background = 'blueviolet';
+        item.style.color = 'white';
+      })
+      inputRangeSlider.style.background = `linear-gradient(90deg, #8A2BE2 ${percentage}%, transparent ${percentage}%)`;
+    } else {
+      currentColor === 'blueviolet' ? (inputRangeSlider.style.background = `linear-gradient(90deg, #8A2BE2 ${percentage}%, transparent ${percentage}%)`) : (inputRangeSlider.style.background = `linear-gradient(90deg, white ${percentage}%, transparent ${percentage}%)`);
+      currentColor === 'blueviolet' ? (customThumbRange.style.background = '#8A2BE2') : (customThumbRange.style.background = 'white')
+    }
+
+  });
+}

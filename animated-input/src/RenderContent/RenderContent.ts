@@ -8,7 +8,11 @@ export const renderContent = () => {
          <span class='field-show-value-range third-span'></span>
          <span class='field-show-value-range fourth-span'></span>
      </div>
-      <input class='animated-input' type='range' min='0' max='100' value="0" steps="10"  />
+     <div class='field-input'>
+     <input class='animated-input' type='range' min='0' max='100' value="0" steps="10"  />
+     <span class='custom-thumb-range'></span>
+     </div>
+      
     </div>
   `
     )
